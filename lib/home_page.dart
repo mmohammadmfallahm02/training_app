@@ -1,11 +1,37 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:training_app/colors.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List info = [];
+  _initData() async {
+    await DefaultAssetBundle.of(context)
+        .loadString('json/info.json')
+        .then((value) {
+      info = json.decode(value);
+      setState(() {
+        
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(info);
     return Scaffold(
       backgroundColor: AppColor.homePageBackground,
       body: Container(
@@ -257,40 +283,44 @@ class HomePage extends StatelessWidget {
             ),
             Expanded(
                 child: GridView.builder(
-              itemBuilder: (context, index) => Container(
-                height: 70,
-                width: 70,
-                padding:EdgeInsets.only(bottom: 5),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                          color: AppColor.gradientSecond.withOpacity(0.1),
-                          blurRadius: 3,
-                          offset: const Offset(5, 5)),
-                      BoxShadow(
-                          color: AppColor.gradientSecond.withOpacity(0.1),
-                          blurRadius: 3,
-                          offset: const Offset(-5, -5))
-                    ],
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/ex${index + 1}.png'))),
-                child: Center(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'glues',
-                      style:
-                          TextStyle(fontSize: 20, color: AppColor.homePageDetail),
+                  shrinkWrap: false,
+              itemBuilder: (_, index) {
+                final infoItem = info[index];
+                return Container(
+                  height: 100,
+                  width: 65,
+                  margin: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                            color: AppColor.gradientSecond.withOpacity(0.1),
+                            blurRadius: 3,
+                            offset: const Offset(5, 5)),
+                        BoxShadow(
+                            color: AppColor.gradientSecond.withOpacity(0.1),
+                            blurRadius: 3,
+                            offset: const Offset(-5, -5))
+                      ],
+                      image:
+                          DecorationImage(image: AssetImage(infoItem['img']))),
+                  child: Center(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        infoItem['title'],
+                        style: TextStyle(
+                            fontSize: 20, color: AppColor.homePageDetail),
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
               scrollDirection: Axis.vertical,
-              itemCount: 4,
+              itemCount: info.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+                  crossAxisCount: 2,),
             ))
           ],
         )),
