@@ -45,6 +45,36 @@ class HomePage extends StatelessWidget {
                   color: AppColor.homePageIcons,
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              children: [
+                Text(
+                  'Your Program',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: AppColor.homePageSubtitle,
+                      fontWeight: FontWeight.w700),
+                ),
+                const Spacer(),
+                Text(
+                  'Details',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: AppColor.homePageDetail,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.arrow_forward,
+                  size: 20,
+                  color: AppColor.homePageIcons,
+                )
+              ],
             )
           ],
         )),
