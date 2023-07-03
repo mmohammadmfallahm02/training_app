@@ -239,10 +239,59 @@ class HomePage extends StatelessWidget {
                                 ]),
                           ),
                         ]),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
+            Row(
+              children: [
+                Text(
+                  'Area of focus',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.homePageTitle,
+                      fontSize: 25),
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+            Expanded(
+                child: GridView.builder(
+              itemBuilder: (context, index) => Container(
+                height: 70,
+                width: 70,
+                padding:EdgeInsets.only(bottom: 5),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                          color: AppColor.gradientSecond.withOpacity(0.1),
+                          blurRadius: 3,
+                          offset: const Offset(5, 5)),
+                      BoxShadow(
+                          color: AppColor.gradientSecond.withOpacity(0.1),
+                          blurRadius: 3,
+                          offset: const Offset(-5, -5))
+                    ],
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/ex${index + 1}.png'))),
+                child: Center(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      'glues',
+                      style:
+                          TextStyle(fontSize: 20, color: AppColor.homePageDetail),
+                    ),
+                  ),
+                ),
+              ),
+              scrollDirection: Axis.vertical,
+              itemCount: 4,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+            ))
           ],
         )),
       ),
