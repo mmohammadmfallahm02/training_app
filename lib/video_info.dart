@@ -27,7 +27,7 @@ class _VideoInfoState extends State<VideoInfo> {
               Container(
                 padding: const EdgeInsets.only(left: 30, right: 30, top: 50),
                 width: MediaQuery.sizeOf(context).width,
-                height: 300,
+                height: 280,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -128,6 +128,47 @@ class _VideoInfoState extends State<VideoInfo> {
                       )
                     ]),
               ),
+              Expanded(
+                  child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.only(topRight: Radius.circular(70))),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'Circuit1:Legs Toning',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.circuitsColor),
+                        ),
+                        const SizedBox(),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(
+                                Icons.loop,
+                                size: 30,
+                                color: AppColor.loopColor,
+                              ),
+                              Text(
+                                '3 sets',
+                                style: TextStyle(
+                                    fontSize: 15, color: AppColor.setsColor),
+                              )
+                            ])
+                      ],
+                    ),
+                  ],
+                ),
+              ))
             ],
           ),
         ),
