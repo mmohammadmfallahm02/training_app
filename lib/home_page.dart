@@ -17,9 +17,7 @@ class _HomePageState extends State<HomePage> {
         .loadString('json/info.json')
         .then((value) {
       info = json.decode(value);
-      setState(() {
-        
-      });
+      setState(() {});
     });
   }
 
@@ -283,7 +281,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
                 child: GridView.builder(
-                  shrinkWrap: false,
+              shrinkWrap: false,
               itemBuilder: (_, index) {
                 final infoItem = info[index];
                 return Container(
@@ -320,7 +318,8 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.vertical,
               itemCount: info.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,),
+                crossAxisCount: 2,
+              ),
             ))
           ],
         )),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:training_app/colors.dart';
 
@@ -9,6 +11,22 @@ class VideoInfo extends StatefulWidget {
 }
 
 class _VideoInfoState extends State<VideoInfo> {
+  List info = [];
+  _initData() async {
+    await DefaultAssetBundle.of(context)
+        .loadString('json/videoinfo.json')
+        .then((value) {
+      info = json.decode(value);
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,6 +175,9 @@ class _VideoInfoState extends State<VideoInfo> {
                                 Icons.loop,
                                 size: 30,
                                 color: AppColor.loopColor,
+                              ),
+                              const SizedBox(
+                                width: 5,
                               ),
                               Text(
                                 '3 sets',
