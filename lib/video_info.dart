@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:training_app/colors.dart';
 
 class VideoInfo extends StatefulWidget {
@@ -52,10 +53,13 @@ class _VideoInfoState extends State<VideoInfo> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: AppColor.secondPageIconColor,
-                            size: 20,
+                          InkWell(
+                            onTap: () => Get.back(),
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: AppColor.secondPageIconColor,
+                              size: 20,
+                            ),
                           ),
                           Icon(
                             Icons.info_outline,
