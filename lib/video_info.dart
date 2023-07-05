@@ -12,12 +12,12 @@ class VideoInfo extends StatefulWidget {
 }
 
 class _VideoInfoState extends State<VideoInfo> {
-  List info = [];
+  List VideoInfo = [];
   _initData() async {
     await DefaultAssetBundle.of(context)
         .loadString('json/videoinfo.json')
         .then((value) {
-      info = json.decode(value);
+      VideoInfo = json.decode(value);
       setState(() {});
     });
   }
@@ -191,6 +191,64 @@ class _VideoInfoState extends State<VideoInfo> {
                             ])
                       ],
                     ),
+                    Expanded(
+                        child: ListView.builder(
+                      itemCount: VideoInfo.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = VideoInfo[index];
+                        return GestureDetector(
+                            onTap: () {
+                              debugPrint(index.toString());
+                            },
+                            child: Container(
+                              
+                              height: 135,
+                              width: 200,
+                              margin: const EdgeInsets.all(8),
+                              child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 80,
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    item['thumbnail']))),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item['title'],
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            item['time'],
+                                            style: TextStyle(
+                                                color: Colors.grey[500]),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ));
+                      },
+                    ))
                   ],
                 ),
               ))
