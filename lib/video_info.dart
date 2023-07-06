@@ -202,53 +202,7 @@ class _VideoInfoState extends State<VideoInfo> {
                             onTap: () {
                               debugPrint(index.toString());
                             },
-                            child: SizedBox(
-                              height: 135,
-                              width: 200,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 80,
-                                        height: 80,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    item['thumbnail']),
-                                                fit: BoxFit.cover)),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            item['title'],
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            item['time'],
-                                            style: TextStyle(
-                                                color: Colors.grey[500]),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ));
+                            child: _listView(item));
                       },
                     ))
                   ],
@@ -257,6 +211,89 @@ class _VideoInfoState extends State<VideoInfo> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _listView(dynamic item) {
+    return SizedBox(
+      height: 135,
+      width: 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                        image: AssetImage(item['thumbnail']),
+                        fit: BoxFit.cover)),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item['title'],
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    item['time'],
+                    style: TextStyle(color: Colors.grey[500]),
+                  )
+                ],
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(children: [
+            Container(
+              height: 20,
+              width: 80,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: const Color(0xffeaeefc),
+                  borderRadius: BorderRadius.circular(10)),
+              child: const Text(
+                '15s rest',
+                style: TextStyle(color: Color(0xff839fed)),
+              ),
+            ),
+            Row(
+              children: [
+                for (int i = 0; i < 70; i++)
+                  i.isEven
+                      ? Container(
+                          width: 3,
+                          height: 1,
+                          decoration: BoxDecoration(
+                              color: const Color(0xff939fed),
+                              borderRadius: BorderRadius.circular(2)),
+                        )
+                      : Container(
+                          width: 3,
+                          height: 1,
+                          color: Colors.white,
+                        )
+              ],
+            )
+          ]),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
       ),
     );
   }
