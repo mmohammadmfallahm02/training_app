@@ -191,20 +191,7 @@ class _VideoInfoState extends State<VideoInfo> {
                             ])
                       ],
                     ),
-                    Expanded(
-                        child: ListView.builder(
-                      itemCount: videoInfo.length,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 8),
-                      itemBuilder: (BuildContext context, int index) {
-                        final item = videoInfo[index];
-                        return GestureDetector(
-                            onTap: () {
-                              debugPrint(index.toString());
-                            },
-                            child: _listView(item));
-                      },
-                    ))
+                    Expanded(child: _listView())
                   ],
                 ),
               ))
@@ -215,7 +202,22 @@ class _VideoInfoState extends State<VideoInfo> {
     );
   }
 
-  _listView(dynamic item) {
+  _listView() {
+    return ListView.builder(
+      itemCount: videoInfo.length,
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+      itemBuilder: (BuildContext context, int index) {
+        final item = videoInfo[index];
+        return GestureDetector(
+            onTap: () {
+              debugPrint(index.toString());
+            },
+            child: _buildCard(item));
+      },
+    );
+  }
+
+  _buildCard(dynamic item) {
     return SizedBox(
       height: 135,
       width: 200,
