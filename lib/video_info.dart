@@ -401,112 +401,117 @@ class _VideoInfoState extends State<VideoInfo> {
   Widget _controlView(BuildContext context) {
     final noMute = (_controller?.value.volume ?? 0) > 0;
     return Container(
-      height: 120,
+      height: 40,
       width: MediaQuery.sizeOf(context).width,
       color: AppColor.gradientSecond,
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        IconButton(
-            onPressed: () {
-              if (noMute) {
-                _controller?.setVolume(0);
-              } else {
-                _controller?.setVolume(1);
-              }
-              setState(() {});
-            },
-            icon: Container(
-              decoration:
-                  const BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                BoxShadow(
-                    offset: Offset(0.0, 0.0),
-                    blurRadius: 4.0,
-                    color: Color.fromARGB(50, 0, 0, 0))
-              ]),
-              child: Icon(
-                noMute ? Icons.volume_up : Icons.volume_off,
-                color: Colors.white,
-              ),
-            )),
-        IconButton(
-            onPressed: () async {
-              final index = _isPlayingIndex - 1;
-              if (index >= 0) {
-                _onTapVideo(index);
-              } else {
-                Get.snackbar('Video List', '',
-                    margin: const EdgeInsets.all(16),
-                    snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: AppColor.gradientSecond,
-                    icon: const Icon(
-                      Icons.face,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                    colorText: Colors.white,
-                    messageText: const Text(
-                      'No videos ahead!',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ));
-              }
-            },
-            icon: const Icon(
-              Icons.fast_rewind,
-              size: 36,
-              color: Colors.white,
-            )),
-        IconButton(
-            onPressed: () async {
-              if (_isPlaying) {
-                _controller?.pause();
-              } else {
-                _controller?.play();
-              }
-            },
-            icon: Icon(
-              _isPlaying ? Icons.pause : Icons.play_arrow,
-              size: 36,
-              color: Colors.white,
-            )),
-        IconButton(
-            onPressed: () async {
-              final index = _isPlayingIndex + 1;
-              if (index <= videoInfo.length - 1) {
-                _onTapVideo(index);
-              } else {
-                final index = _isPlayingIndex + 1;
-                if (index <= videoInfo.length - 1) {
-                  _onTapVideo(index);
-                } else {
-                  Get.snackbar('Video List', '',
-                      margin: const EdgeInsets.all(16),
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: AppColor.gradientSecond,
-                      icon: const Icon(
-                        Icons.face,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      colorText: Colors.white,
-                      messageText: const Text(
-                        'you have finished watching all the videos. Congrats!',
-                        style: TextStyle(
-                          fontSize: 20,
+      margin: const EdgeInsets.only(bottom: 5),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+                onPressed: () {
+                  if (noMute) {
+                    _controller?.setVolume(0);
+                  } else {
+                    _controller?.setVolume(1);
+                  }
+                  setState(() {});
+                },
+                icon: Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  decoration:
+                      const BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0.0, 0.0),
+                        blurRadius: 4.0,
+                        color: Color.fromARGB(50, 0, 0, 0))
+                  ]),
+                  child: Icon(
+                    noMute ? Icons.volume_up : Icons.volume_off,
+                    color: Colors.white,
+                  ),
+                )),
+            IconButton(
+                onPressed: () async {
+                  final index = _isPlayingIndex - 1;
+                  if (index >= 0) {
+                    _onTapVideo(index);
+                  } else {
+                    Get.snackbar('Video List', '',
+                        margin: const EdgeInsets.all(16),
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: AppColor.gradientSecond,
+                        icon: const Icon(
+                          Icons.face,
+                          size: 30,
                           color: Colors.white,
                         ),
-                      ));
-                }
-              }
-            },
-            icon: const Icon(
-              Icons.fast_forward,
-              size: 36,
-              color: Colors.white,
-            )),
-        const SizedBox()
-      ]),
+                        colorText: Colors.white,
+                        messageText: const Text(
+                          'No videos ahead!',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ));
+                  }
+                },
+                icon: const Icon(
+                  Icons.fast_rewind,
+                  size: 36,
+                  color: Colors.white,
+                )),
+            IconButton(
+                onPressed: () async {
+                  if (_isPlaying) {
+                    _controller?.pause();
+                  } else {
+                    _controller?.play();
+                  }
+                },
+                icon: Icon(
+                  _isPlaying ? Icons.pause : Icons.play_arrow,
+                  size: 36,
+                  color: Colors.white,
+                )),
+            IconButton(
+                onPressed: () async {
+                  final index = _isPlayingIndex + 1;
+                  if (index <= videoInfo.length - 1) {
+                    _onTapVideo(index);
+                  } else {
+                    final index = _isPlayingIndex + 1;
+                    if (index <= videoInfo.length - 1) {
+                      _onTapVideo(index);
+                    } else {
+                      Get.snackbar('Video List', '',
+                          margin: const EdgeInsets.all(16),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: AppColor.gradientSecond,
+                          icon: const Icon(
+                            Icons.face,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                          colorText: Colors.white,
+                          messageText: const Text(
+                            'you have finished watching all the videos. Congrats!',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ));
+                    }
+                  }
+                },
+                icon: const Icon(
+                  Icons.fast_forward,
+                  size: 36,
+                  color: Colors.white,
+                )),
+            const SizedBox()
+          ]),
     );
   }
 
