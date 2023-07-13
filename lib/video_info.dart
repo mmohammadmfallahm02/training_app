@@ -14,7 +14,7 @@ class VideoInfo extends StatefulWidget {
 class _VideoInfoState extends State<VideoInfo> {
   List videoInfo = [];
   bool playArea = false;
-  late VideoPlayerController _controller;
+  late VideoPlayerController? _controller;
   _initData() async {
     await DefaultAssetBundle.of(context)
         .loadString('json/videoinfo.json')
@@ -365,12 +365,15 @@ class _VideoInfoState extends State<VideoInfo> {
   Widget _playView(BuildContext buildContext) {
     final controller = _controller;
     if (controller != null && controller.value.isInitialized) {
-      return SizedBox(height: 300, width: 300, child: VideoPlayer(controller));
+      return AspectRatio(aspectRatio: 16 / 9, child: VideoPlayer(controller));
     } else {
-      return SizedBox(
-          height: 300,
-          width: 300,
-          child: Center(child: const Text('Being initialized pls wait')));
+      return const AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Center(
+              child: Text(
+            'Preparing...',
+            style: TextStyle(fontSize: 20, color: Colors.white60),
+          )));
     }
   }
 }
