@@ -399,11 +399,34 @@ class _VideoInfoState extends State<VideoInfo> {
   }
 
   Widget _controlView(BuildContext context) {
+    final noMute = (_controller?.value.volume ?? 0) > 0;
     return Container(
       height: 120,
       width: MediaQuery.sizeOf(context).width,
       color: AppColor.gradientSecond,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        IconButton(
+            onPressed: () {
+              if (noMute) {
+                _controller?.setVolume(0);
+              } else {
+                _controller?.setVolume(1);
+              }
+              setState(() {});
+            },
+            icon: Container(
+              decoration:
+                  const BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                BoxShadow(
+                    offset: Offset(0.0, 0.0),
+                    blurRadius: 4.0,
+                    color: Color.fromARGB(50, 0, 0, 0))
+              ]),
+              child: Icon(
+                noMute ? Icons.volume_up : Icons.volume_off,
+                color: Colors.white,
+              ),
+            )),
         IconButton(
             onPressed: () async {
               final index = _isPlayingIndex - 1;
@@ -481,7 +504,8 @@ class _VideoInfoState extends State<VideoInfo> {
               Icons.fast_forward,
               size: 36,
               color: Colors.white,
-            ))
+            )),
+        const SizedBox()
       ]),
     );
   }
