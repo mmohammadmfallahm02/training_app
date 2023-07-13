@@ -433,10 +433,17 @@ class _VideoInfoState extends State<VideoInfo> {
     );
   }
 
+  var _onUpdatedControllerTime;
   void _onControllerUpdate() async {
     if (_disposed) {
       return;
     }
+    _onUpdatedControllerTime = 0;
+    final now = DateTime.now().millisecondsSinceEpoch;
+    if (_onUpdatedControllerTime > now) {
+      return;
+    }
+    _onUpdatedControllerTime = now + 500;
     final controller = _controller;
     if (controller == null) {
       debugPrint('controller is null');
