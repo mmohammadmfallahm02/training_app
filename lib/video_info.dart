@@ -15,6 +15,7 @@ class _VideoInfoState extends State<VideoInfo> {
   List videoInfo = [];
   bool playArea = false;
   bool _isPlaying = false;
+  bool _disposed = false;
   VideoPlayerController? _controller;
   _initData() async {
     await DefaultAssetBundle.of(context)
@@ -29,6 +30,15 @@ class _VideoInfoState extends State<VideoInfo> {
   void initState() {
     _initData();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    _controller?.pause();
+    _controller?.dispose();
+    _controller = null;
+    super.dispose();
   }
 
   @override
@@ -356,9 +366,15 @@ class _VideoInfoState extends State<VideoInfo> {
   void _onTapVideo(int index) {
     final videoUrl = Uri.parse(videoInfo[index]['videoUrl']);
     final controller = VideoPlayerController.networkUrl(videoUrl);
+    final old = _controller;
     _controller = controller;
+    if (old != null) {
+      old.removeListener(_onControllerUpdate);
+      old.pause();
+    }
     setState(() {});
     controller.initialize().then((_) {
+      old?.dispose();
       controller.addListener(_onControllerUpdate);
       controller.play();
       setState(() {});
@@ -418,6 +434,9 @@ class _VideoInfoState extends State<VideoInfo> {
   }
 
   void _onControllerUpdate() async {
+    if (_disposed) {
+      return;
+    }
     final controller = _controller;
     if (controller == null) {
       debugPrint('controller is null');
