@@ -359,6 +359,7 @@ class _VideoInfoState extends State<VideoInfo> {
     _controller = controller;
     setState(() {});
     controller.initialize().then((_) {
+      controller.addListener(_onControllerUpdate);
       controller.play();
       setState(() {});
     });
@@ -396,8 +397,8 @@ class _VideoInfoState extends State<VideoInfo> {
               _controller?.play();
             }
           },
-          icon: const Icon(
-            Icons.play_arrow,
+          icon: Icon(
+            _isPlaying ? Icons.play_arrow : Icons.pause,
             size: 36,
             color: Colors.white,
           )),
@@ -409,5 +410,23 @@ class _VideoInfoState extends State<VideoInfo> {
             color: Colors.white,
           ))
     ]);
+  }
+
+  void _onControllerUpdate() async {
+    final controller = _controller;
+    if (controller == null) {
+      debugPrint('controller is null');
+      return;
+    }
+    if (!controller.value.isInitialized) {
+      debugPrint('controller can not be initialized');
+      return;
+    }
+
+    final playing = controller.value.isPlaying;
+    _isPlaying = playing;
+    setState(() {
+      
+    });
   }
 }
