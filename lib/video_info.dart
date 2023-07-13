@@ -410,7 +410,23 @@ class _VideoInfoState extends State<VideoInfo> {
               if (index >= 0) {
                 _onTapVideo(index);
               } else {
-                Get.snackbar('Video', 'No more video to play');
+                Get.snackbar('Video List', '',
+                    margin: const EdgeInsets.all(16),
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: AppColor.gradientSecond,
+                    icon: const Icon(
+                      Icons.face,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                    colorText: Colors.white,
+                    messageText: const Text(
+                      'No videos ahead!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ));
               }
             },
             icon: const Icon(
@@ -437,7 +453,28 @@ class _VideoInfoState extends State<VideoInfo> {
               if (index <= videoInfo.length - 1) {
                 _onTapVideo(index);
               } else {
-                Get.snackbar('Video', 'No more video to play');
+                final index = _isPlayingIndex + 1;
+                if (index <= videoInfo.length - 1) {
+                  _onTapVideo(index);
+                } else {
+                  Get.snackbar('Video List', '',
+                      margin: const EdgeInsets.all(16),
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: AppColor.gradientSecond,
+                      icon: const Icon(
+                        Icons.face,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                      colorText: Colors.white,
+                      messageText: const Text(
+                        'you have finished watching all the videos. Congrats!',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ));
+                }
               }
             },
             icon: const Icon(
