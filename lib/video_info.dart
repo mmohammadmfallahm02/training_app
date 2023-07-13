@@ -352,8 +352,8 @@ class _VideoInfoState extends State<VideoInfo> {
   }
 
   void _onTapVideo(int index) {
-    final controller =
-        VideoPlayerController.network(videoInfo[index]['videoUrl']);
+    final videoUrl = Uri.parse(videoInfo[index]['videoUrl']);
+    final controller = VideoPlayerController.networkUrl(videoUrl);
     _controller = controller;
     setState(() {});
     controller.initialize().then((_) {
