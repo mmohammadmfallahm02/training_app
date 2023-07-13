@@ -162,7 +162,6 @@ class _VideoInfoState extends State<VideoInfo> {
                           ]),
                     )
                   : SizedBox(
-                      height: 300,
                       child: Column(
                         children: [
                           Container(
@@ -354,7 +353,7 @@ class _VideoInfoState extends State<VideoInfo> {
 
   void _onTapVideo(int index) {
     final controller =
-        VideoPlayerController.networkUrl(videoInfo[index]['videoUrl']);
+        VideoPlayerController.network(videoInfo[index]['videoUrl']);
     _controller = controller;
     setState(() {});
     controller.initialize().then((_) {
@@ -363,5 +362,15 @@ class _VideoInfoState extends State<VideoInfo> {
     });
   }
 
-  _playView(BuildContext buildContext) {}
+  Widget _playView(BuildContext buildContext) {
+    final controller = _controller;
+    if (controller != null && controller.value.isInitialized) {
+      return SizedBox(height: 300, width: 300, child: VideoPlayer(controller));
+    } else {
+      return SizedBox(
+          height: 300,
+          width: 300,
+          child: Center(child: const Text('Being initialized pls wait')));
+    }
+  }
 }
