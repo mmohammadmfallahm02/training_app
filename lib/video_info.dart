@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:training_app/colors.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoInfo extends StatefulWidget {
   const VideoInfo({super.key});
@@ -13,6 +14,7 @@ class VideoInfo extends StatefulWidget {
 class _VideoInfoState extends State<VideoInfo> {
   List videoInfo = [];
   bool playArea = false;
+  late VideoPlayerController _controller;
   _initData() async {
     await DefaultAssetBundle.of(context)
         .loadString('json/videoinfo.json')
@@ -253,6 +255,7 @@ class _VideoInfoState extends State<VideoInfo> {
         final item = videoInfo[index];
         return InkWell(
             onTap: () {
+              _onTapVideo(index);
               debugPrint(index.toString());
 
               setState(() {
@@ -347,6 +350,17 @@ class _VideoInfoState extends State<VideoInfo> {
         ],
       ),
     );
+  }
+
+  void _onTapVideo(int index) {
+    final controller =
+        VideoPlayerController.networkUrl(videoInfo[index]['videoUrl']);
+    _controller = controller;
+    setState(() {});
+    controller.initialize().then((_) {
+      controller.play();
+      setState(() {});
+    });
   }
 
   _playView(BuildContext buildContext) {}
