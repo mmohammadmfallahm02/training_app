@@ -16,6 +16,7 @@ class _VideoInfoState extends State<VideoInfo> {
   bool playArea = false;
   bool _isPlaying = false;
   bool _disposed = false;
+  int _isPlayingIndex = -1;
   VideoPlayerController? _controller;
   _initData() async {
     await DefaultAssetBundle.of(context)
@@ -375,6 +376,7 @@ class _VideoInfoState extends State<VideoInfo> {
     setState(() {});
     controller.initialize().then((_) {
       old?.dispose();
+      _isPlayingIndex = index;
       controller.addListener(_onControllerUpdate);
       controller.play();
       setState(() {});
@@ -403,7 +405,14 @@ class _VideoInfoState extends State<VideoInfo> {
       color: AppColor.gradientSecond,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         IconButton(
-            onPressed: () async {},
+            onPressed: () async {
+              final index = _isPlayingIndex - 1;
+              if (index >= 0) {
+                _onTapVideo(index);
+              } else {
+                Get.snackbar('Video', 'No more video to play');
+              }
+            },
             icon: const Icon(
               Icons.fast_rewind,
               size: 36,
@@ -423,7 +432,14 @@ class _VideoInfoState extends State<VideoInfo> {
               color: Colors.white,
             )),
         IconButton(
-            onPressed: () async {},
+            onPressed: () async {
+              final index = _isPlayingIndex + 1;
+              if (index <= videoInfo.length - 1) {
+                _onTapVideo(index);
+              } else {
+                Get.snackbar('Video', 'No more video to play');
+              }
+            },
             icon: const Icon(
               Icons.fast_forward,
               size: 36,
