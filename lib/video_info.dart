@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:training_app/colors.dart';
@@ -13,6 +12,7 @@ class VideoInfo extends StatefulWidget {
 
 class _VideoInfoState extends State<VideoInfo> {
   List videoInfo = [];
+  bool playArea = false;
   _initData() async {
     await DefaultAssetBundle.of(context)
         .loadString('json/videoinfo.json')
@@ -32,124 +32,167 @@ class _VideoInfoState extends State<VideoInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: const FractionalOffset(0.0, 0.4),
-                end: Alignment.topRight,
-                colors: [
-              AppColor.gradientFirst.withOpacity(0.9),
-              AppColor.gradientSecond,
-            ])),
+        decoration: playArea == false
+            ? BoxDecoration(
+                gradient: LinearGradient(
+                    begin: const FractionalOffset(0.0, 0.4),
+                    end: Alignment.topRight,
+                    colors: [
+                    AppColor.gradientFirst.withOpacity(0.9),
+                    AppColor.gradientSecond,
+                  ]))
+            : BoxDecoration(color: AppColor.gradientSecond),
         child: SafeArea(
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.only(left: 30, right: 30, top: 50),
-                width: MediaQuery.sizeOf(context).width,
-                height: 280,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () => Get.back(),
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: AppColor.secondPageIconColor,
-                              size: 20,
-                            ),
-                          ),
-                          Icon(
-                            Icons.info_outline,
-                            color: AppColor.secondPageIconColor,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Legs Toning \nand Glutes Workout',
-                        style: TextStyle(
-                            fontSize: 25, color: AppColor.secondPageTitleColor),
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: 90,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                gradient: LinearGradient(
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.topRight,
-                                    colors: [
-                                      AppColor
-                                          .secondPageContainerGradient1stColor,
-                                      AppColor
-                                          .secondPageContainerGradient2ndColor
-                                    ])),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              playArea == false
+                  ? Container(
+                      padding:
+                          const EdgeInsets.only(left: 30, right: 30, top: 50),
+                      width: MediaQuery.sizeOf(context).width,
+                      height: 280,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                InkWell(
+                                  onTap: () => Get.back(),
+                                  child: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: AppColor.secondPageIconColor,
+                                    size: 20,
+                                  ),
+                                ),
                                 Icon(
-                                  Icons.timer_outlined,
+                                  Icons.info_outline,
                                   color: AppColor.secondPageIconColor,
                                   size: 20,
                                 ),
-                                Text(
-                                  '68 min',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColor.secondPageIconColor),
-                                )
                               ],
                             ),
-                          ),
-                          Container(
-                            width: 240,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                gradient: LinearGradient(
-                                    begin: Alignment.bottomLeft,
-                                    end: Alignment.topRight,
-                                    colors: [
-                                      AppColor
-                                          .secondPageContainerGradient1stColor,
-                                      AppColor
-                                          .secondPageContainerGradient2ndColor
-                                    ])),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Legs Toning \nand Glutes Workout',
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: AppColor.secondPageTitleColor),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.handyman_outlined,
-                                  color: AppColor.secondPageIconColor,
-                                  size: 20,
+                                Container(
+                                  width: 90,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      gradient: LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          colors: [
+                                            AppColor
+                                                .secondPageContainerGradient1stColor,
+                                            AppColor
+                                                .secondPageContainerGradient2ndColor
+                                          ])),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.timer_outlined,
+                                        color: AppColor.secondPageIconColor,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        '68 min',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color:
+                                                AppColor.secondPageIconColor),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                Text(
-                                  'Resistent band, Kettebell',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColor.secondPageIconColor),
-                                )
+                                Container(
+                                  width: 240,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      gradient: LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          colors: [
+                                            AppColor
+                                                .secondPageContainerGradient1stColor,
+                                            AppColor
+                                                .secondPageContainerGradient2ndColor
+                                          ])),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.handyman_outlined,
+                                        color: AppColor.secondPageIconColor,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        'Resistent band, Kettebell',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color:
+                                                AppColor.secondPageIconColor),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ]),
+                    )
+                  : SizedBox(
+                      height: 300,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: 20, right: 20, left: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_back_ios,
+                                    size: 20,
+                                    color: AppColor.secondPageIconColor,
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.info_outline,
+                                      size: 20,
+                                      color: AppColor.secondPageIconColor,
+                                    ))
                               ],
                             ),
                           ),
+                          _playView(context)
                         ],
-                      )
-                    ]),
-              ),
+                      ),
+                    ),
               Expanded(
                   child: Container(
                 decoration: const BoxDecoration(
@@ -211,6 +254,12 @@ class _VideoInfoState extends State<VideoInfo> {
         return InkWell(
             onTap: () {
               debugPrint(index.toString());
+
+              setState(() {
+                if (playArea == false) {
+                  playArea = true;
+                }
+              });
             },
             child: _buildCard(item));
       },
@@ -299,4 +348,6 @@ class _VideoInfoState extends State<VideoInfo> {
       ),
     );
   }
+
+  _playView(BuildContext buildContext) {}
 }
