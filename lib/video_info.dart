@@ -208,7 +208,7 @@ class _VideoInfoState extends State<VideoInfo> {
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
       itemBuilder: (BuildContext context, int index) {
         final item = videoInfo[index];
-        return GestureDetector(
+        return InkWell(
             onTap: () {
               debugPrint(index.toString());
             },
