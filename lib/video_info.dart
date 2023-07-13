@@ -14,7 +14,8 @@ class VideoInfo extends StatefulWidget {
 class _VideoInfoState extends State<VideoInfo> {
   List videoInfo = [];
   bool playArea = false;
-  late VideoPlayerController? _controller;
+  bool _isPlaying = false;
+  VideoPlayerController? _controller;
   _initData() async {
     await DefaultAssetBundle.of(context)
         .loadString('json/videoinfo.json')
@@ -190,7 +191,8 @@ class _VideoInfoState extends State<VideoInfo> {
                               ],
                             ),
                           ),
-                          _playView(context)
+                          _playView(context),
+                          _controlView(context),
                         ],
                       ),
                     ),
@@ -375,5 +377,37 @@ class _VideoInfoState extends State<VideoInfo> {
             style: TextStyle(fontSize: 20, color: Colors.white60),
           )));
     }
+  }
+
+  Widget _controlView(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      IconButton(
+          onPressed: () async {},
+          icon: const Icon(
+            Icons.fast_rewind,
+            size: 36,
+            color: Colors.white,
+          )),
+      IconButton(
+          onPressed: () async {
+            if (_isPlaying) {
+              _controller?.pause();
+            } else {
+              _controller?.play();
+            }
+          },
+          icon: const Icon(
+            Icons.play_arrow,
+            size: 36,
+            color: Colors.white,
+          )),
+      IconButton(
+          onPressed: () async {},
+          icon: const Icon(
+            Icons.fast_forward,
+            size: 36,
+            color: Colors.white,
+          ))
+    ]);
   }
 }
