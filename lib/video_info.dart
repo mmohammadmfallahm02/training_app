@@ -381,35 +381,40 @@ class _VideoInfoState extends State<VideoInfo> {
   }
 
   Widget _controlView(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      IconButton(
-          onPressed: () async {},
-          icon: const Icon(
-            Icons.fast_rewind,
-            size: 36,
-            color: Colors.white,
-          )),
-      IconButton(
-          onPressed: () async {
-            if (_isPlaying) {
-              _controller?.pause();
-            } else {
-              _controller?.play();
-            }
-          },
-          icon: Icon(
-            _isPlaying ? Icons.play_arrow : Icons.pause,
-            size: 36,
-            color: Colors.white,
-          )),
-      IconButton(
-          onPressed: () async {},
-          icon: const Icon(
-            Icons.fast_forward,
-            size: 36,
-            color: Colors.white,
-          ))
-    ]);
+    return Container(
+      height: 120,
+      width: MediaQuery.sizeOf(context).width,
+      color: AppColor.gradientSecond,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        IconButton(
+            onPressed: () async {},
+            icon: const Icon(
+              Icons.fast_rewind,
+              size: 36,
+              color: Colors.white,
+            )),
+        IconButton(
+            onPressed: () async {
+              if (_isPlaying) {
+                _controller?.pause();
+              } else {
+                _controller?.play();
+              }
+            },
+            icon: Icon(
+              _isPlaying ? Icons.pause : Icons.play_arrow,
+              size: 36,
+              color: Colors.white,
+            )),
+        IconButton(
+            onPressed: () async {},
+            icon: const Icon(
+              Icons.fast_forward,
+              size: 36,
+              color: Colors.white,
+            ))
+      ]),
+    );
   }
 
   void _onControllerUpdate() async {
@@ -425,8 +430,6 @@ class _VideoInfoState extends State<VideoInfo> {
 
     final playing = controller.value.isPlaying;
     _isPlaying = playing;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 }
